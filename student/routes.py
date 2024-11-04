@@ -4,10 +4,10 @@ from marshmallow import ValidationError
 from .models import Student, db
 
 # Initialize the Blueprint here in routes.py
-student_bp = Blueprint('student', __name__, url_prefix='/student')
+student_bp = Blueprint('student', __name__, url_prefix='/api')
 
 
-@student_bp.route('/register', methods=['POST'])
+@student_bp.route('/v1/register', methods=['POST'])
 def register():
     # Load and validate input data using the schema
     try:

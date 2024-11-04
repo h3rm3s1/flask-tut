@@ -19,5 +19,6 @@ config = {
 }
 
 APPS = [
-    'Student.student_bp'
+    'student.student_bp',
+    'auth.auth_bp'
 ]
