@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5001:5000"  # Maps host port 5001 to container port 5000
+    environment:
+      FLASK_APP: app
+      FLASK_ENV: development
+      DATABASE_URL: postgresql://admin:admin_password@db:5432/school_db
+      SECRET_KEY: my_super_secret_key
+    depends_on:
+      - db
+    volumes:
+      - .:/app  # Mounts the current directory to /app in the container
+      - migrations_data:/app/migrations
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin_password
+      POSTGRES_DB: school_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+  migrations_data:
