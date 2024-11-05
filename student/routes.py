@@ -4,7 +4,7 @@ from marshmallow import ValidationError
 from .models import Student, db
 
 # Initialize the Blueprint here in routes.py
-student_bp = Blueprint('student', __name__, url_prefix='/api')
+student_bp = Blueprint('student', __name__, url_prefix='/api/student')
 
 
 @student_bp.route('/v1/register', methods=['POST'])

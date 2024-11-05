@@ -20,5 +20,6 @@ config = {
 
 APPS = [
     'student.student_bp',
+    'course.course_bp',
     'auth.auth_bp'
 ]

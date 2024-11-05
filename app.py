@@ -4,6 +4,7 @@ from flask_jwt_extended import JWTManager
 from flask_redis import FlaskRedis
 from settings import config, APPS
 from dotenv import load_dotenv
+from middleware import Middleware
 import importlib
 import os
 import logging
@@ -23,9 +24,12 @@ def create_app():
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
 
-    # Initialize database
-    from student.models import db
+    # Initialize database and models
+    from student.models import db  # Import Student model
     db.init_app(app)
+
+    # Initialize Flask-Migrate
+    Migrate(app, db)
 
     # Initialize JWT Manager
     jwt = JWTManager(app)
@@ -43,11 +47,10 @@ def create_app():
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blacklist(jwt_header, jwt_payload):
         jti = jwt_payload['jti']
-        # Check if the token's unique ID (jti) is in Redis
         return redis_client.get(jti) is not None
 
-    # Initialize Flask-Migrate to enable migration commands
-    Migrate(app, db)  # No need to use 'migrate' directly after this line
+    # Register the IP capture middleware
+    Middleware(app)  # This activates the middleware
 
     # Register Blueprints from APPS list
     for app_name in APPS:

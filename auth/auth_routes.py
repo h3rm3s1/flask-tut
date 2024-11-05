@@ -4,7 +4,7 @@ from student.models import Student
 from datetime import timedelta
 
 # Create a blueprint for auth
-auth_bp = Blueprint('auth', __name__, url_prefix='/api')
+auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 revoked_tokens = set()
 

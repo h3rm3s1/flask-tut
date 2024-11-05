@@ -1,0 +1,1 @@
+from .routes import course_bp  # Import the blueprint directly
